@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "premortem": {
+      "source": "parcadei/continuous-claude-v3",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/premortem/SKILL.md",
+      "computedHash": "198ad5a1a443e1dd1c94abfa9e14d77bb84d85b1d69c379bfe3fa74de5fef43f"
+    }
+  }
+}

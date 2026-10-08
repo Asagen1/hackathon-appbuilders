@@ -6,6 +6,7 @@ module.exports = function (api) {
       'nativewind/babel',
     ],
     plugins: [
+      'expo-router/babel',
       [
         'module-resolver',
         {
@@ -14,8 +15,6 @@ module.exports = function (api) {
           alias: {
             '@': './src',
             '@components': './src/components',
-            '@screens': './src/screens',
-            '@navigation': './src/navigation',
             '@services': './src/services',
             '@hooks': './src/hooks',
             '@utils': './src/utils',
