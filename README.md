@@ -193,12 +193,9 @@ import { Colors } from '@constants';
 - [Zustand](https://zustand-demo.pmnd.rs)
 - [React Query](https://tanstack.com/query)
 
-## 🎯 Ready for Hackathon!
+## Start building by:
 
-Your environment is fully configured. Start building by:
 1. Creating screens in `src/screens/`
 2. Adding components in `src/components/`
 3. Setting up API calls in `src/services/api/`
 4. Managing state with Zustand
-
-Good luck! 🚀
