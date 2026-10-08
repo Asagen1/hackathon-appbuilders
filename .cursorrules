@@ -1,0 +1,152 @@
+# AI Agent Context File
+
+## Project Overview
+Hackathon mobile app built with React Native, Expo, and TypeScript.
+
+## Tech Stack
+- **Framework**: React Native with Expo SDK 57
+- **Language**: TypeScript (strict mode)
+- **Styling**: NativeWind (Tailwind CSS)
+- **Storage**: MMKV (react-native-mmkv)
+- **State Management**: Zustand + React Query
+- **Navigation**: React Navigation (Stack + Tabs)
+- **Lists**: FlashList (@shopify/flash-list)
+
+## Project Structure
+```
+src/
+├── components/     # UI components
+├── screens/        # Full-screen views
+├── navigation/     # Navigation setup
+├── services/       # API, storage, external services
+├── hooks/          # Custom hooks & Zustand stores
+├── utils/          # Helper functions
+├── types/          # TypeScript types
+└── constants/      # App constants
+```
+
+## Import Aliases
+- `@components/*` → `src/components/*`
+- `@screens/*` → `src/screens/*`
+- `@navigation/*` → `src/navigation/*`
+- `@services/*` → `src/services/*`
+- `@hooks/*` → `src/hooks/*`
+- `@utils/*` → `src/utils/*`
+- `@types/*` → `src/types/*`
+- `@constants/*` → `src/constants/*`
+
+## Coding Standards
+
+### Components
+- Functional components only
+- TypeScript with proper typing
+- Props interface for every component
+- NativeWind for styling (className prop)
+- Export default for main component
+
+### State Management
+- **Zustand**: Global app state, persisted state
+- **React Query**: API data, caching
+- **useState**: Local component state
+
+### Storage
+- Use `storageService` from `@services/storage`
+- Methods: `setString`, `getString`, `setObject`, `getObject`, `setBoolean`, `getBoolean`
+- Keys defined in `StorageKeys` constant
+
+### API Calls
+- Use `apiClient` from `@services/api`
+- Combine with React Query hooks
+- Type all responses
+- Handle loading/error states
+
+### Lists
+- Always use FlashList, not FlatList
+- Provide `estimatedItemSize`
+- Use `keyExtractor` for unique keys
+
+### Navigation
+- Type-safe with `RootStackParamList`
+- Screens in `src/screens/`
+- Tab navigation in `MainTabs.tsx`
+
+## Key Files
+- `App.tsx` - Main entry, providers
+- `src/navigation/RootNavigator.tsx` - Navigation root
+- `src/navigation/MainTabs.tsx` - Tab navigation
+- `src/services/storage/mmkv.ts` - Storage service
+- `src/services/api/client.ts` - API client
+- `src/hooks/useAppStore.ts` - Global Zustand store
+
+## Development Build
+App uses custom native modules (MMKV), requires development build:
+```bash
+npx expo prebuild
+npm run android
+```
+
+## When Creating New Features
+1. Define types first
+2. Create service/API functions if needed
+3. Create components bottom-up
+4. Connect with hooks/state
+5. Add to navigation if new screen
+6. Test on Android device/emulator
+
+## Common Patterns
+
+### Screen Component
+```tsx
+import React from 'react';
+import { View, Text } from 'react-native';
+
+export default function MyScreen() {
+  return (
+    <View className="flex-1 bg-white p-4">
+      <Text className="text-2xl font-bold">My Screen</Text>
+    </View>
+  );
+}
+```
+
+### API Hook
+```tsx
+import { useQuery } from '@tanstack/react-query';
+import { apiClient } from '@services/api';
+
+export function useData() {
+  return useQuery({
+    queryKey: ['data'],
+    queryFn: () => apiClient.get('/data'),
+  });
+}
+```
+
+### Storage Usage
+```tsx
+import { storageService, StorageKeys } from '@services/storage';
+
+storageService.setString(StorageKeys.USER_TOKEN, 'token');
+const token = storageService.getString(StorageKeys.USER_TOKEN);
+```
+
+## Important Notes
+- Expo Go does NOT work (uses custom native modules)
+- Must use development build or emulator
+- Windows environment (PowerShell commands)
+- Run on Android only (no Mac for iOS)
+- NativeWind uses className prop, not style prop
+- MMKV is synchronous and fast
+
+## Available Scripts
+- `npm start` - Start dev server
+- `npm run android` - Run on Android
+- `npx expo prebuild` - Generate native folders
+- `npx expo start -c` - Clear Metro cache
+
+## Git Workflow
+- Commit frequently
+- Descriptive commit messages
+- Format: `feat:`, `fix:`, `refactor:`, `docs:`, `chore:`
+
+This context helps AI assistants understand the project structure and conventions for effective code generation and modifications.
