@@ -1,16 +1,16 @@
-import { MMKV } from 'react-native-mmkv';
+import { createMMKV } from 'react-native-mmkv';
 
 // Initialize MMKV instance
-export const storage = new MMKV();
+export const storage = createMMKV();
 
 /**
  * Type-safe MMKV Storage Service
  * Provides easy access to MMKV with TypeScript support
  */
 class StorageService {
-  private storage: MMKV;
+  private storage: ReturnType<typeof createMMKV>;
 
-  constructor(mmkvInstance: MMKV) {
+  constructor(mmkvInstance: ReturnType<typeof createMMKV>) {
     this.storage = mmkvInstance;
   }
 
@@ -58,8 +58,8 @@ class StorageService {
   }
 
   // Delete operation
-  delete(key: string): void {
-    this.storage.delete(key);
+  remove(key: string): boolean {
+    return this.storage.remove(key);
   }
 
   // Check if key exists

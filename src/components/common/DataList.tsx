@@ -1,11 +1,10 @@
 import React from 'react';
-import { View, Text, ActivityIndicator } from 'react-native';
+import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
 import { FlashList, ListRenderItem } from '@shopify/flash-list';
 
 interface DataListProps<T> {
   data: T[];
   renderItem: ListRenderItem<T>;
-  estimatedItemSize: number;
   loading?: boolean;
   error?: string;
   emptyMessage?: string;
@@ -18,7 +17,6 @@ interface DataListProps<T> {
 export default function DataList<T>({
   data,
   renderItem,
-  estimatedItemSize,
   loading = false,
   error,
   emptyMessage = 'No data available',
@@ -29,28 +27,26 @@ export default function DataList<T>({
 }: DataListProps<T>) {
   if (loading && data.length === 0) {
     return (
-      <View className="flex-1 items-center justify-center">
+      <View style={styles.centerContainer}>
         <ActivityIndicator size="large" color="#0ea5e9" />
-        <Text className="text-gray-600 mt-4">Loading...</Text>
+        <Text style={styles.loadingText}>Loading...</Text>
       </View>
     );
   }
 
   if (error) {
     return (
-      <View className="flex-1 items-center justify-center p-4">
-        <Text className="text-red-500 text-center text-lg font-semibold mb-2">
-          Error
-        </Text>
-        <Text className="text-gray-600 text-center">{error}</Text>
+      <View style={styles.centerContainer}>
+        <Text style={styles.errorTitle}>Error</Text>
+        <Text style={styles.errorMessage}>{error}</Text>
       </View>
     );
   }
 
   if (data.length === 0) {
     return (
-      <View className="flex-1 items-center justify-center p-4">
-        <Text className="text-gray-600 text-center">{emptyMessage}</Text>
+      <View style={styles.centerContainer}>
+        <Text style={styles.emptyMessage}>{emptyMessage}</Text>
       </View>
     );
   }
@@ -59,7 +55,6 @@ export default function DataList<T>({
     <FlashList
       data={data}
       renderItem={renderItem}
-      estimatedItemSize={estimatedItemSize}
       keyExtractor={keyExtractor}
       onRefresh={onRefresh}
       refreshing={refreshing}
@@ -68,3 +63,31 @@ export default function DataList<T>({
     />
   );
 }
+
+const styles = StyleSheet.create({
+  centerContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 16,
+  },
+  loadingText: {
+    color: '#6b7280',
+    marginTop: 16,
+  },
+  errorTitle: {
+    color: '#ef4444',
+    textAlign: 'center',
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: 8,
+  },
+  errorMessage: {
+    color: '#6b7280',
+    textAlign: 'center',
+  },
+  emptyMessage: {
+    color: '#6b7280',
+    textAlign: 'center',
+  },
+});
